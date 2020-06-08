@@ -1,0 +1,25 @@
+<div class="card mb-4 shadow-sm">
+  <img
+    class="bd-placeholder-img card-img-top img-fluid"
+    width="100%"
+    [src]="productItem.imageUrl"
+  />
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Total :{{ productItem.price | currency: "INR" }}</strong>
+    </p>
+    <p class="card-text">
+      {{ productItem.description }}
+    </p>
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="btn-group">
+        <button type="button" class="btn btn-sm btn-outline-primary">
+          Add to Cart
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">
+          View detail
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
