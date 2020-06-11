@@ -10,6 +10,7 @@ export class MessengerService {
 
   sendMsg(product) {
     // console.log(product);
+
     this.subject.next(product); // triggering an event;
   }
 

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/shared/header/header.component';
 import { NavComponent } from './components/shared/nav/nav.component';
@@ -25,7 +25,7 @@ import { ProductItemComponent } from './components/shopping-card/product-list/pr
     CartComponent,
     ProductItemComponent,
   ],
-  imports: [BrowserModule],
+  imports: [BrowserModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

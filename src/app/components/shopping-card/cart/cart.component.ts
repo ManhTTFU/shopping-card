@@ -68,6 +68,7 @@ export class CartComponent implements OnInit {
         qty: 1,
         price: product.price,
       });
+      // localStorage.setItem('x', JSON.stringify(this.cartItems));
     }
     // if (this.cartItems.length === 0) {
     //   this.cartItems.push({
