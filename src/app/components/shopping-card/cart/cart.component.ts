@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MessengerService } from 'src/app/services/messenger.service';
 import { Product } from 'src/app/models/product';
+import { CartService } from 'src/app/services/cart.service';
+import { CartItem } from 'src/app/models/cart-item';
 
 @Component({
   selector: 'app-cart',
@@ -8,89 +10,37 @@ import { Product } from 'src/app/models/product';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  cartItems = [
-    // {
-    //   id: 1,
-    //   productId: 1,
-    //   productName: 'Scoopy Doo 1',
-    //   qty: 1,
-    //   price: 100,
-    // },
-    // {
-    //   id: 2,
-    //   productId: 2,
-    //   productName: 'Scoopy Doo 2',
-    //   qty: 2,
-    //   price: 200,
-    // },
-    // {
-    //   id: 3,
-    //   productId: 3,
-    //   productName: 'Scoopy Doo 3',
-    //   qty: 3,
-    //   price: 300,
-    // },
-    // {
-    //   id: 4,
-    //   productId: 4,
-    //   productName: 'Scoopy Doo 4',
-    //   qty: 4,
-    //   price: 400,
-    // },
-  ];
+  cartItems = [];
 
   cartTotal = 0;
 
-  constructor(private msg: MessengerService) {}
+  constructor(
+    private msg: MessengerService,
+    private cartSerivce: CartService
+  ) {}
 
   ngOnInit(): void {
+    this.handleSubscription();
+    this.loadCartItem();
+  }
+
+  handleSubscription() {
     this.msg.getMsg().subscribe((product: Product) => {
       // console.log('prod', product);
-      this.addProducToCart(product);
+      // this.addProducToCart(product);
+      this.loadCartItem();
     });
   }
 
-  addProducToCart(product: Product) {
-    let productExists = false; // product is not exists
+  loadCartItem() {
+    this.cartSerivce.getCartItems().subscribe((items: CartItem[]) => {
+      // console.log('x', items);
+      this.cartItems = items;
+      this.calcCartTotal();
+    });
+  }
 
-    for (let i in this.cartItems) {
-      if (this.cartItems[i].productId === product.id) {
-        this.cartItems[i].qty++;
-        productExists = true;
-        break;
-      }
-    }
-
-    if (!productExists) {
-      this.cartItems.push({
-        productId: product.id,
-        productName: product.name,
-        qty: 1,
-        price: product.price,
-      });
-      // localStorage.setItem('x', JSON.stringify(this.cartItems));
-    }
-    // if (this.cartItems.length === 0) {
-    //   this.cartItems.push({
-    //     productId: product.id,
-    //     productName: product.name,
-    //     qty: 1,
-    //     price: product.price,
-    //   });
-    // } else {
-    //   for (let i in this.cartItems) {
-    //     if (this.cartItems[i].productId === product.id) {
-    //       this.cartItems[i].qty++;
-    //     } else {
-    //       this.cartItems.push({
-    //         productId: product.id,
-    //         productName: product.name,
-    //         qty: 1,
-    //         price: product.price,
-    //       });
-    //     }
-    //   }
-    // }
+  calcCartTotal() {
     this.cartTotal = 0;
     this.cartItems.forEach((item) => {
       this.cartTotal += item.qty * item.price;
