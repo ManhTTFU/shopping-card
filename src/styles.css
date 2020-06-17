@@ -2,3 +2,8 @@
 .cart-item {
   font-size: small;
 }
+
+.fa-heart {
+  color: palevioletred;
+  cursor: pointer;
+}

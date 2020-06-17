@@ -9,3 +9,6 @@ export const productsUrl = baseUrl + '/products';
 
 //Api Intergration for Cart
 export const cartUrl = baseUrl + '/cart';
+
+// Api Intergration for wishlist
+export const wishlistUrl = baseUrl + '/wishlist';
